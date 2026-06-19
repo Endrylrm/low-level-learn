@@ -13,6 +13,7 @@ int main()
   int_list.push(4);
   int_list.push(5);
   int_list.push(6);
+  int_list.push_front(3);
   int_list.print();
   int popped_int = int_list.pop();
   std::cout << "Popped Value: " << popped_int << std::endl;
