@@ -33,9 +33,10 @@ int main()
   smart_int_list.push(4);
   smart_int_list.push(5);
   smart_int_list.push(6);
+  smart_int_list.push_at(3, 2);
   smart_int_list.push_front(3);
   smart_int_list.print();
-  int smart_popped_int = smart_int_list.pop_back();
+  int smart_popped_int = smart_int_list.pop();
   std::cout << "Popped Value: " << smart_popped_int << std::endl;
   smart_int_list.clear();
   smart_int_list.print();

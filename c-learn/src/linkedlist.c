@@ -105,7 +105,7 @@ void linkedlist_push_at(LinkedList *list, int value, size_t index) {
         return;
     }
 
-    if (index < 0 || index > list->size) {
+    if (index > list->size) {
         log_error("Out of bounds!");
         return;
     }
@@ -120,14 +120,12 @@ void linkedlist_push_at(LinkedList *list, int value, size_t index) {
     if (new_node == NULL)
         return;
 
-    size_t count = 0;
     Node_T *cur_node = list->head;
     Node_T *prev_node = NULL;
 
-    while (count < index) {
+    for (size_t i = 0; i < index; i++) {
         prev_node = cur_node;
         cur_node = cur_node->next;
-        count++;
     }
 
     new_node->next = cur_node;
@@ -136,76 +134,76 @@ void linkedlist_push_at(LinkedList *list, int value, size_t index) {
 }
 
 int linkedlist_pop_back(LinkedList *list) {
-    int old_node_value = -1;
+    int node_value = -1;
 
     if (list == NULL) {
         log_error("Linked List is NULL, please put a valid linked list!");
-        return old_node_value;
+        return node_value;
     }
 
     Node_T *cur_node = list->head;
 
     if (cur_node == NULL) {
         log_error("trying to pop a empty list!");
-        return old_node_value;
+        return node_value;
     }
 
     if (cur_node->next == NULL) {
-        old_node_value = cur_node->value;
+        node_value = cur_node->value;
         free(cur_node);
         list->size = 0;
         list->head = NULL;
-        return old_node_value;
+        return node_value;
     }
 
     while (cur_node->next->next != NULL) {
         cur_node = cur_node->next;
     }
 
-    old_node_value = cur_node->next->value;
+    node_value = cur_node->next->value;
     free(cur_node->next);
     cur_node->next = NULL;
     list->size--;
-    return old_node_value;
+    return node_value;
 }
 
 int linkedlist_pop_front(LinkedList *list) {
-    int old_node_value = -1;
+    int node_value = -1;
 
     if (list == NULL) {
         log_error("Linked List is NULL, please put a valid linked list!");
-        return old_node_value;
+        return node_value;
     }
 
     if (list->head == NULL) {
         log_error("trying to pop a empty list!");
-        return old_node_value;
+        return node_value;
     }
 
-    old_node_value = list->head->value;
+    node_value = list->head->value;
     Node_T *next = list->head->next;
     free(list->head);
     list->head = next;
     list->size--;
-    return old_node_value;
+    return node_value;
 }
 
 int linkedlist_pop_at(LinkedList *list, size_t index) {
-    int old_node_value = -1;
+    int node_value = -1;
 
     if (list == NULL) {
         log_error("Linked List is NULL, please put a valid linked list!");
-        return old_node_value;
+        return node_value;
     }
 
-    if (index < 0 || index >= list->size) {
+    if (index >= list->size) {
         log_error("Out of bounds!");
-        return old_node_value;
+        return node_value;
     }
 
     if (list->head == NULL) {
         log_error("trying to pop a empty list!");
-        return old_node_value;
+        return node_value;
     }
 
     if (index == 0) {
@@ -222,20 +220,17 @@ int linkedlist_pop_at(LinkedList *list, size_t index) {
         count++;
     }
 
-    if (cur_node != NULL) {
-        old_node_value = cur_node->value;
-        prev_node->next = cur_node->next;
-        free(cur_node);
-        list->size--;
-    }
-
-    return old_node_value;
+    node_value = cur_node->value;
+    prev_node->next = cur_node->next;
+    free(cur_node);
+    list->size--;
+    return node_value;
 }
 
 void linkedlist_remove_back(LinkedList *list) {
     if (list == NULL) {
         log_error("Linked List is NULL, please put a valid linked list!");
-        return NULL;
+        return;
     }
 
     Node_T *cur_node = list->head;
@@ -264,7 +259,7 @@ void linkedlist_remove_back(LinkedList *list) {
 void linkedlist_remove_front(LinkedList *list) {
     if (list == NULL) {
         log_error("Linked List is NULL, please put a valid linked list!");
-        return NULL;
+        return;
     }
 
     if (list->head == NULL) {
@@ -281,10 +276,10 @@ void linkedlist_remove_front(LinkedList *list) {
 void linkedlist_remove_at(LinkedList *list, size_t index) {
     if (list == NULL) {
         log_error("Linked List is NULL, please put a valid linked list!");
-        return NULL;
+        return;
     }
 
-    if (index < 0 || index >= list->size) {
+    if (index >= list->size) {
         log_error("Out of bounds!");
         return;
     }
@@ -309,11 +304,9 @@ void linkedlist_remove_at(LinkedList *list, size_t index) {
         count++;
     }
 
-    if (cur_node != NULL) {
-        prev_node->next = cur_node->next;
-        free(cur_node);
-        list->size--;
-    }
+    prev_node->next = cur_node->next;
+    free(cur_node);
+    list->size--;
 }
 
 Node_T *linkedlist_find(LinkedList *list, int value) {
@@ -345,7 +338,7 @@ Node_T *linkedlist_find_at(LinkedList *list, size_t index) {
         return NULL;
     }
 
-    if (index < 0 || index >= list->size) {
+    if (index >= list->size) {
         log_error("Out of bounds!");
         return NULL;
     }

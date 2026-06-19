@@ -44,6 +44,7 @@ int main()
   linkedlist_push_back(list_heap, 10);
   linkedlist_push_front(list_heap, 0);
   linkedlist_push_at(list_heap, 25, 3);
+  linkedlist_remove_at(list_heap, 3);
   linkedlist_print(list_heap);
   // destroy clears and frees list
   linkedlist_destroy(list_heap);

@@ -64,7 +64,7 @@ public:
     delete cur_node->next;
     cur_node->next = nullptr;
     size--;
-    return node_value;    
+    return node_value;
   }
 
   T pop_front() {
