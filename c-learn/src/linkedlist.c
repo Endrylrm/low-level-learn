@@ -8,28 +8,26 @@ static Node_T *node_new(int value);
 static Node_T node_copy(const Node_T* node);
 
 static Node_T node_init(int value) {
-    Node_T n;
-    n.value = value;
-    n.next = NULL;
-    return n;
+    Node_T new_node;
+    new_node.value = value;
+    new_node.next = NULL;
+    return new_node;
 }
 
 static Node_T *node_new(int value) {
-    Node_T *n = (Node_T*) malloc(sizeof(Node_T));
+    Node_T *new_node = (Node_T*) malloc(sizeof(Node_T));
 
-    if (n == NULL)
+    if (new_node == NULL)
         return NULL;
 
-    n->value = value;
-    n->next = NULL;
-
-    return n;
+    new_node->value = value;
+    new_node->next = NULL;
+    return new_node;
 }
 
 static Node_T node_copy(const Node_T* node) {
     if (node == NULL) {
         log_error("trying to copy a null value.");
-
         // just return a "null node"
         Node_T invalid = {0};
         return invalid;
@@ -53,7 +51,6 @@ LinkedList *linkedlist_new(void) {
         return NULL;
 
     *list = linkedlist_init();
-
     return list;
 }
 
@@ -369,15 +366,16 @@ LinkedList *linkedlist_find_all(LinkedList *list, int value) {
         return NULL;        
     }
 
+    if (list->head == NULL) {
+        log_error("Linked List is empty!");
+        return NULL;
+    }
+
     LinkedList *new_list = linkedlist_new();
 
     if (new_list == NULL) {
         log_error("Failed to allocate memory!");
         return NULL;
-    }
-
-    if (list->head == NULL) {
-        return new_list;
     }
 
     Node_T *cur_node = list->head;
@@ -394,6 +392,7 @@ LinkedList *linkedlist_find_all(LinkedList *list, int value) {
 
 size_t linkedlist_length(LinkedList *list) {
     if (list == NULL) {
+        log_error("Linked List is NULL, please put a valid linked list!");
         return 0;
     }
 
