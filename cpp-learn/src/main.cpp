@@ -6,8 +6,12 @@
 
 int main()
 {
-  Person p = Person("Endryl", 28);
-  p.print();
+  Person pEndryl = Person("Endryl", 28);
+  pEndryl.print();
+
+  Person* pAudren = new Person("Audren", 18);
+  pAudren->print();
+  delete pAudren;
 
   LinkedList<int> int_list;
   int_list.push(4);
